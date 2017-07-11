@@ -1,20 +1,20 @@
 package com.example.learn;
 
 import com.example.learn.model.Person;
-import com.example.learn.service.PersonService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-public class StreamPersonServiceTest {
+public class StreamsTest {
 
 
     private List<Person> persons = Arrays.asList(
@@ -58,6 +58,7 @@ public class StreamPersonServiceTest {
     public void groupByPower() {
         Map<Double, List<Person>> personsByPower = persons.stream()
                 .collect(Collectors.groupingBy(Person::getPower));
+
         assertThat(personsByPower.get(7.0)).hasSize(2);
         assertThat(personsByPower.get(7.0).toString()).contains("Luke", "Leia");
     }

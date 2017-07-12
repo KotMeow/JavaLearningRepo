@@ -4,6 +4,7 @@ import com.example.learn.model.Person;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@RunWith(SpringRunner.class)
+@RunWith(JUnit4.class)
 public class FunctionalInterfacesTest {
 
 

@@ -29,14 +29,12 @@ public class FunctionalInterfacesTest {
             new Person("Leia", 55, 7.0),
             new Person("Luke", 88, 7.0));
     private Person vader;
-    private Person luke;
 
 
     //@Before - before each test, @BeforeClass - once before all
     @Before
     public void before() {
         vader = new Person("Vader", 55, 9.5);
-        luke = new Person("Luke", 88, 7.0);
     }
 
     @Test

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface PersonRepository extends JpaRepository<Person, Long> {
+public interface PersonRepository extends JpaRepository<Person, Long>, PersonRepositoryCustom {
 
     List<Person> findByName(String s);
 }

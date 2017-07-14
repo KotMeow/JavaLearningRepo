@@ -33,7 +33,6 @@ public class HomeController {
     public List<Person> getPersonList() throws InterruptedException {
         log.info("Request for PersonService data");
         // Thread.sleep(2000);
-
         return personRepository.findAll();
     }
 

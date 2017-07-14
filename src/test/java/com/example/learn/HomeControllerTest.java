@@ -48,7 +48,7 @@ public class HomeControllerTest {
 
     @Test
     public void shouldReturnHello() throws Exception {
-        this.mockMvc.perform(get("/hello")).andDo(print()).andExpect(status().isOk()).andExpect(content().string("hello"));
+        this.mockMvc.perform(get("/hello")).andExpect(status().isOk()).andExpect(content().string("hello"));
     }
 
     @Test

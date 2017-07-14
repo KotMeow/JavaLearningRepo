@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@RunWith(JUnit4.class)
 public class FunctionalInterfacesTest {
 
 

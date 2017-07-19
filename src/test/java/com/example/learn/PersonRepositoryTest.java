@@ -62,4 +62,12 @@ public class PersonRepositoryTest {
         assertThat(personRepository.findWithMinimumPowerOf(9L)).isEmpty();
     }
 
+    @Test
+    public void personProjection() {
+        personRepository.save(person);
+        personRepository.save(person2);
+
+        assertThat(personRepository.findAllProjectedBy()).hasSize(2);
+    }
+
 }

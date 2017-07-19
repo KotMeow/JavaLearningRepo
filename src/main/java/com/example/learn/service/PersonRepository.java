@@ -1,6 +1,7 @@
 package com.example.learn.service;
 
 import com.example.learn.model.Person;
+import com.example.learn.model.PersonProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +13,6 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Person, Long>, PersonRepositoryCustom {
 
     List<Person> findByName(String s);
+    List<PersonProjection> findAllProjectedBy();
+
 }

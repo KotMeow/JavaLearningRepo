@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
+//@Transactional
 public class PersonRepositoryTest {
 
     @Autowired
@@ -58,12 +58,9 @@ public class PersonRepositoryTest {
     public void savePersonWithFood() throws Exception {
         personRepository.save(person2);
         person1.setFood(food);
-        food.setPerson(person1);
         personRepository.save(person1);
-
         assertThat(personRepository.findAll()).hasSize(2);
         assertThat(foodRepository.findAll()).hasSize(1);
-        assertThat(foodRepository.findOne(food.getId()).getPerson()).isEqualToIgnoringGivenFields(person1, "food");
         assertThat(personRepository.findOne(person1.getId()).getFood()).isEqualToIgnoringGivenFields(food, "person");
     }
 

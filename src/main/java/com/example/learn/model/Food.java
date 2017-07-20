@@ -1,7 +1,6 @@
 package com.example.learn.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -20,10 +19,6 @@ public class Food {
     private String name;
 
     private int kcal;
-
-    @OneToOne
-    @JoinColumn(name = "id_person")
-    private Person person;
 
     public Food(String name, int kcal) {
         this.name = name;

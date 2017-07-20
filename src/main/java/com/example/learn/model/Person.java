@@ -20,8 +20,11 @@ public class Person {
     private String name;
     private double power;
 
-    //mappedBy zawsze w klasie która jest 'rodzicem'.
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "person")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name="user_to_food",
+            joinColumns=@JoinColumn(name="id_food", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="id_person", referencedColumnName="id")
+    )
     private Food food;
 
 

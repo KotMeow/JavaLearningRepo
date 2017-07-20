@@ -22,8 +22,7 @@ public class Person {
     private String name;
     private double power;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private List<Food> foods = new ArrayList<>();
 
 

@@ -20,6 +20,8 @@ public class Food {
 
     private int kcal;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Person person;
 
     public Food(String name, int kcal) {
         this.name = name;

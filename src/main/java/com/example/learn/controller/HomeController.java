@@ -1,7 +1,6 @@
 package com.example.learn.controller;
 
 
-import com.example.learn.model.Greeting;
 import com.example.learn.model.Person;
 import com.example.learn.service.PersonRepository;
 import org.slf4j.Logger;
@@ -43,20 +42,5 @@ public class HomeController {
         return personRepository.findOne(id);
     }
 
-    @PostMapping("/send")
-    @ResponseBody
-    public Greeting postData(@RequestBody(required = false) Greeting greeting) {
-        if (greeting != null) {
-            greeting.setAge(greeting.getAge() + 10);
-            return greeting;
-        }
-        else
-            return new Greeting();
-    }
 
-    @GetMapping("/hello")
-    @ResponseBody
-    public String getHello() {
-        return "hello";
-    }
 }

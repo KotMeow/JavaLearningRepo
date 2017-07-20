@@ -1,6 +1,8 @@
 package com.example.learn;
 
+import com.example.learn.model.Food;
 import com.example.learn.model.Person;
+import com.example.learn.service.FoodRepository;
 import com.example.learn.service.PersonRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,66 +25,59 @@ public class PersonRepositoryTest {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private FoodRepository foodRepository;
+
 //    @MockBean
 //    private PersonRepository personRepositoryMock;
 
-    private Person person;
+    private Person person1;
     private Person person2;
-    private Person personSameButDifferent;
+    private Food food;
 
     @Before
     public void init() {
-        person = new Person("Yoda", 20, 4.44);
-        person2 = new Person("Vader", 30, 8);
-        personSameButDifferent = new Person("Yoda", 24, 4.44);
+        food = new Food("Cherry Pie", 250);
+        person1 = new Person("Yoda", 4.44);
+        person2 = new Person("Vader", 8);
     }
 
     @Test
-    public void savePerson() {
-        personRepository.save(person);
-        assertThat(personRepository.findOne(person.getId())).isEqualTo(person);
-        assertThat(personRepository.findOne(person.getId())).isEqualToIgnoringGivenFields(personSameButDifferent, "id");
+    public void savePerson() throws Exception {
+        personRepository.save(person1);
+        assertThat(personRepository.findAll()).hasSize(1);
     }
 
     @Test
-    public void findByName() {
-        personRepository.save(person);
-        List<Person> found = personRepository.findByName("Yoda");
-        assertThat(found).isNotEmpty();
-        assertThat(found).contains(person);
+    public void saveFood() throws Exception {
+        foodRepository.save(food);
+        assertThat(foodRepository.findAll()).hasSize(1);
     }
 
     @Test
-    public void customPersonRepoOperation() {
-        personRepository.save(person);
-        personRepository.save(person2);
-        assertThat(personRepository.findAll()).hasSize(2);
-        assertThat(personRepository.findWithMinimumPowerOf(5L)).hasSize(1);
-        assertThat(personRepository.findWithMinimumPowerOf(4L)).hasSize(2);
-        assertThat(personRepository.findWithMinimumPowerOf(9L)).isEmpty();
+    public void savePersonWithFood() throws Exception {
+        person1.setFood(food);
+        personRepository.save(person1);
+
+        //food is saved automatically with person when CascadeType.Persist is set
+        //foodRepository.save(food);
+
+        assertThat(personRepository.findOne(person1.getId()).getFood()).isEqualTo(food);
+        assertThat(foodRepository.findAll()).hasSize(1);
+
     }
 
     @Test
-    public void personProjection() {
-        personRepository.save(person);
-        personRepository.save(person2);
+    public void removePerson() throws Exception {
+        person1.setFood(food);
+        personRepository.save(person1);
 
-        assertThat(personRepository.findAllProjectedBy()).hasSize(2);
-    }
+        assertThat(personRepository.findOne(person1.getId()).getFood()).isEqualTo(food);
 
-    @Test
-    public void topPower() {
-        personRepository.save(person);
-        personRepository.save(person2);
+        personRepository.delete(person1.getId());
 
-        assertThat(personRepository.findMaxPower()).isEqualTo(8);
-    }
+        assertThat(personRepository.findAll()).isEmpty();
+        assertThat(foodRepository.findAll()).isEmpty();
 
-    @Test
-    public void getAvgAge(){
-        personRepository.save(person);
-        personRepository.save(person2);
-
-        assertThat(personRepository.getAvgAge()).isEqualTo(25);
     }
 }

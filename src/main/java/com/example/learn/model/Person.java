@@ -20,11 +20,7 @@ public class Person {
     private String name;
     private double power;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "person_to_food",
-            joinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private List<Food> foods = new ArrayList<>();
 
 

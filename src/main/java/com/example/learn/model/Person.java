@@ -20,11 +20,7 @@ public class Person {
     private String name;
     private double power;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name="user_to_food",
-            joinColumns=@JoinColumn(name="id_food", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="id_person", referencedColumnName="id")
-    )
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
     private Food food;
 
 

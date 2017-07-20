@@ -20,11 +20,12 @@ public class Food {
 
     private int kcal;
 
-    @ManyToOne
-    @JoinTable(
-            name = "person_to_food",
-            joinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
+    @Enumerated(EnumType.STRING)
+    private FoodType foodType;
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id")
     private Person person;
 
     public Food(String name, int kcal) {

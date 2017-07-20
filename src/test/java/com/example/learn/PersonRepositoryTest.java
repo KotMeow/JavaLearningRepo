@@ -1,6 +1,7 @@
 package com.example.learn;
 
 import com.example.learn.model.Food;
+import com.example.learn.model.FoodType;
 import com.example.learn.model.Person;
 import com.example.learn.service.FoodRepository;
 import com.example.learn.service.PersonRepository;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
+//@Transactional
 public class PersonRepositoryTest {
 
     @Autowired
@@ -50,35 +51,28 @@ public class PersonRepositoryTest {
 
     @Test
     public void saveFood() throws Exception {
+        food.setFoodType(FoodType.DINNER);
         foodRepository.save(food);
         assertThat(foodRepository.findAll()).hasSize(1);
     }
 
     @Test
     public void savePersonWithFood() throws Exception {
+        food.setFoodType(FoodType.BREAKFAST);
         food.setPerson(person1);
+        food2.setFoodType(FoodType.DESSERT);
         food2.setPerson(person1);
-        person1.getFoods().add(food);
-        person1.getFoods().add(food2);
+        person1.getOrders().put(FoodType.BREAKFAST, food);
+        person1.getOrders().put(FoodType.DESSERT, food2);
+
         personRepository.save(person1);
-        assertThat(personRepository.findAll()).hasSize(1);
-        assertThat(foodRepository.findAll()).hasSize(2);
-        assertThat(personRepository.findOne(person1.getId()).getFoods()).contains(food, food2);
-        assertThat(foodRepository.findOne(food.getId()).getPerson()).isEqualToIgnoringGivenFields(person1, "food");
+
+        assertThat(personRepository.getOne(person1.getId()).getOrders().get(FoodType.DESSERT)).isEqualTo(food2);
     }
 
     @Test
     public void removePerson() throws Exception {
-        person1.getFoods().add(food);
-        person1.getFoods().add(food2);
-        personRepository.save(person1);
 
-        assertThat(personRepository.findOne(person1.getId()).getFoods()).contains(food, food2);
-
-        personRepository.delete(person1.getId());
-
-        assertThat(personRepository.findAll()).isEmpty();
-        assertThat(foodRepository.findAll()).isEmpty();
 
     }
 }

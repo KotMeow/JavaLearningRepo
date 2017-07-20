@@ -6,7 +6,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Data
@@ -21,7 +23,8 @@ public class Person {
     private double power;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    private List<Food> foods = new ArrayList<>();
+    @MapKey
+    private Map<FoodType, Food> orders = new HashMap<>();
 
 
     public Person(String name, double power) {

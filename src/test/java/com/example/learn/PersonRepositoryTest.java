@@ -32,8 +32,8 @@ public class PersonRepositoryTest {
 
     @Before
     public void init() {
-        person = new Person("Yoda", 24, 4.44);
-        person2 = new Person("Vader", 24, 8);
+        person = new Person("Yoda", 20, 4.44);
+        person2 = new Person("Vader", 30, 8);
         personSameButDifferent = new Person("Yoda", 24, 4.44);
     }
 
@@ -70,4 +70,19 @@ public class PersonRepositoryTest {
         assertThat(personRepository.findAllProjectedBy()).hasSize(2);
     }
 
+    @Test
+    public void topPower() {
+        personRepository.save(person);
+        personRepository.save(person2);
+
+        assertThat(personRepository.findMaxPower()).isEqualTo(8);
+    }
+
+    @Test
+    public void getAvgAge(){
+        personRepository.save(person);
+        personRepository.save(person2);
+
+        assertThat(personRepository.getAvgAge()).isEqualTo(25);
+    }
 }

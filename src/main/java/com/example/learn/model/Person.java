@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Entity
-@NamedQuery(name = "Person.findByName", query = "from Person p where p.name = ?1")
+@NamedQuery(name = "Person.getAvgAge", query = "select avg(p.age) from Person p")
 public class Person {
 
     @Id

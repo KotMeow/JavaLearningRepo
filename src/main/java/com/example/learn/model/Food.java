@@ -20,13 +20,6 @@ public class Food {
 
     private int kcal;
 
-    @ManyToOne
-    @JoinTable(
-            name = "person_to_food",
-            joinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
-    private Person person;
-
     public Food(String name, int kcal) {
         this.name = name;
         this.kcal = kcal;

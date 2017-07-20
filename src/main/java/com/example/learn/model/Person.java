@@ -22,9 +22,13 @@ public class Person {
     private String name;
     private double power;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    @MapKey
-    private Map<FoodType, Food> orders = new HashMap<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "person_to_food",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "food_id"))
+    private List<Food> food = new ArrayList<>();
 
 
     public Person(String name, double power) {

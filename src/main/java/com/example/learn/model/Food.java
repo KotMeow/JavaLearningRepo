@@ -20,14 +20,6 @@ public class Food {
 
     private int kcal;
 
-    @Enumerated(EnumType.STRING)
-    private FoodType foodType;
-
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id")
-    private Person person;
-
     public Food(String name, int kcal) {
         this.name = name;
         this.kcal = kcal;

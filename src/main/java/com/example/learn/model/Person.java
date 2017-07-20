@@ -1,10 +1,8 @@
 package com.example.learn.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,7 +20,11 @@ public class Person {
     private String name;
     private double power;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "person_to_food",
+            joinColumns = @JoinColumn(name = "food_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
     private List<Food> foods = new ArrayList<>();
 
 

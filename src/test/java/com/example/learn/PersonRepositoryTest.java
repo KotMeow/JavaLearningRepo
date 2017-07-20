@@ -58,15 +58,13 @@ public class PersonRepositoryTest {
 
     @Test
     public void savePersonWithFood() throws Exception {
-        food.setPerson(person1);
-        food2.setPerson(person1);
+
         person1.getFoods().add(food);
         person1.getFoods().add(food2);
         personRepository.save(person1);
         assertThat(personRepository.findAll()).hasSize(1);
         assertThat(foodRepository.findAll()).hasSize(2);
         assertThat(personRepository.findOne(person1.getId()).getFoods()).contains(food, food2);
-        assertThat(foodRepository.findOne(food.getId()).getPerson()).isEqualToIgnoringGivenFields(person1, "food");
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.example.learn.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
@@ -19,8 +20,8 @@ public class Person {
     private String name;
     private double power;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name = "food_id")
+    //mappedBy zawsze w klasie która jest 'rodzicem'.
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "person")
     private Food food;
 
 

@@ -34,10 +34,12 @@ public class PersonRepositoryTest {
     private Person person1;
     private Person person2;
     private Food food;
+    private Food food2;
 
     @Before
     public void init() {
         food = new Food("Cherry Pie", 250);
+        food2 = new Food("Apple Pie", 440);
         person1 = new Person("Yoda", 4.44);
         person2 = new Person("Vader", 8);
     }
@@ -56,22 +58,21 @@ public class PersonRepositoryTest {
 
     @Test
     public void savePersonWithFood() throws Exception {
-        personRepository.save(person2);
-        person1.setFood(food);
-        food.setPerson(person1);
+        person1.getFoods().add(food);
+        person1.getFoods().add(food2);
         personRepository.save(person1);
-        assertThat(personRepository.findAll()).hasSize(2);
-        assertThat(foodRepository.findAll()).hasSize(1);
-        assertThat(foodRepository.findOne(food.getId()).getPerson()).isEqualToIgnoringGivenFields(person1, "food");
-        assertThat(personRepository.findOne(person1.getId()).getFood()).isEqualToIgnoringGivenFields(food, "person");
+        assertThat(personRepository.findAll()).hasSize(1);
+        assertThat(foodRepository.findAll()).hasSize(2);
+        assertThat(personRepository.findOne(person1.getId()).getFoods()).contains(food, food2);
     }
 
     @Test
     public void removePerson() throws Exception {
-        person1.setFood(food);
+        person1.getFoods().add(food);
+        person1.getFoods().add(food2);
         personRepository.save(person1);
 
-        assertThat(personRepository.findOne(person1.getId()).getFood()).isEqualTo(food);
+        assertThat(personRepository.findOne(person1.getId()).getFoods()).contains(food, food2);
 
         personRepository.delete(person1.getId());
 

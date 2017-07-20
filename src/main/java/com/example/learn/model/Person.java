@@ -7,6 +7,8 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,8 +22,9 @@ public class Person {
     private String name;
     private double power;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
-    private Food food;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id")
+    private List<Food> foods = new ArrayList<>();
 
 
     public Person(String name, double power) {

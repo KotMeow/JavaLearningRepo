@@ -11,9 +11,4 @@ import java.util.List;
 @Repository
 @Transactional
 public interface PersonRepository extends JpaRepository<Person, Long> {
-
-    List<Person> findByName(String s);
-
-    @Query("select max(p.power) from Person p")
-    Double findMaxPower();
 }

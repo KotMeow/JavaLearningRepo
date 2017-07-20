@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +13,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @ToString
-public class Person {
+public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private double power;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    private List<Food> foods = new ArrayList<>();
-
 
     public Person(String name, double power) {
         this.name = name;

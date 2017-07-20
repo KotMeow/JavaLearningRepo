@@ -2,13 +2,14 @@ package com.example.learn.controller;
 
 
 import com.example.learn.model.Person;
-import com.example.learn.service.PersonRepository;
+import com.example.learn.service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
-    private PersonRepository personRepository;
+    private PersonService personService;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -26,21 +27,21 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/data")
-    @CrossOrigin
+    @GetMapping("/get")
     @ResponseBody
     public List<Person> getPersonList() throws InterruptedException {
-        log.info("Request for PersonService data");
-        // Thread.sleep(2000);
-        return personRepository.findAll();
+        return personService.findAll();
     }
 
-    @GetMapping("/data/{id}")
-    @CrossOrigin
+    @GetMapping("/add")
     @ResponseBody
-    public Person getPerson(@PathVariable("id") long id) {
-        return personRepository.findOne(id);
+    public Person add() throws InterruptedException {
+        return personService.addPerson(new Person("Vader", 2.5));
     }
 
-
+    @GetMapping("/refresh")
+    @ResponseBody
+    public boolean refresh() {
+        return personService.refresh();
+    }
 }

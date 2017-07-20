@@ -23,11 +23,7 @@ public class Person {
     private double power;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "person_to_food",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "food_id"))
+    @ManyToMany(mappedBy = "people", cascade = CascadeType.ALL)
     private List<Food> food = new ArrayList<>();
 
 

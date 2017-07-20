@@ -34,10 +34,6 @@ public class PersonRepositoryTest {
 
     @Autowired
     private FoodRepository foodRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
-
 //    @MockBean
 //    private PersonRepository personRepositoryMock;
 
@@ -69,20 +65,20 @@ public class PersonRepositoryTest {
     @Test
     public void savePersonWithFood() throws Exception {
 
+        food.getPeople().add(person1);
+        food.getPeople().add(person2);
+        food2.getPeople().add(person1);
         person1.getFood().add(food);
         person1.getFood().add(food2);
         person2.getFood().add(food);
         personRepository.save(Arrays.asList(person1, person2));
+
         assertThat(personRepository.findOne(person1.getId()).getFood()).containsOnly(food, food2);
         assertThat(personRepository.findOne(person2.getId()).getFood()).containsOnly(food);
+        assertThat(foodRepository.findOne(food.getId()).getPeople()).containsOnly(person1, person2);
+        assertThat(foodRepository.findOne(food2.getId()).getPeople()).containsOnly(person1);
         assertThat(personRepository.findAll()).hasSize(2);
         assertThat(foodRepository.findAll()).hasSize(2);
-
-    }
-
-    @Test
-    public void removePerson() throws Exception {
-
 
     }
 }

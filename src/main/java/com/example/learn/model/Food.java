@@ -1,31 +1,31 @@
 package com.example.learn.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Person implements Serializable {
+public class Food {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private double power;
-    private String city;
-    private String country;
 
-    @ManyToMany(mappedBy = "people", cascade = CascadeType.ALL)
-    private List<Food> food = new ArrayList<>();
+    private String name;
+
+    private int kcal;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "person_to_food", joinColumns = @JoinColumn(name = "food_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
+    private List<Person> people = new ArrayList<>();
 
 }

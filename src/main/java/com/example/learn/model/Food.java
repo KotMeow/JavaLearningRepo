@@ -24,7 +24,7 @@ public class Food {
 
     private int kcal;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "person_to_food", joinColumns = @JoinColumn(name = "food_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
     private List<Person> people = new ArrayList<>();
 

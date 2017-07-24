@@ -32,8 +32,8 @@ public class FirebaseTokenFilter extends AbstractAuthenticationProcessingFilter 
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String authToken = request.getHeader(TOKEN_HEADER);
         if (Strings.isNullOrEmpty(authToken)) {
-            response.sendError(401, "Token");
-            throw new RuntimeException("Invaild auth token");
+            response.setStatus(401);
+            return null;
         }
         return getAuthenticationManager().authenticate(new FirebaseAuthenticationToken(authToken));
     }
@@ -43,13 +43,5 @@ public class FirebaseTokenFilter extends AbstractAuthenticationProcessingFilter 
             throws IOException, ServletException {
         super.successfulAuthentication(request, response, chain, authResult);
         chain.doFilter(request, response);
-    }
-
-    @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                              AuthenticationException failed) throws IOException, ServletException {
-        super.unsuccessfulAuthentication(request, response, failed);
-        System.out.print("fail auth");
-        response.sendError(401);
     }
 }

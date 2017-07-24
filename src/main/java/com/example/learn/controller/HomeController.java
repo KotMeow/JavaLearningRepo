@@ -46,17 +46,6 @@ public class HomeController {
         personRepository.save(person);
     }
 
-    @RequestMapping(value = "/check", method = RequestMethod.POST)
-    public void check(@RequestBody ReqUser reqUser, HttpServletRequest request) {
-        log.info(String.valueOf(reqUser));
-        log.info(request.getHeader("X-Firebase-Auth"));
-//        FirebaseAuth.getInstance().verifyIdToken(request.getHeader("X-Firebase-Auth"))
-//                .addOnSuccessListener(decodedToken -> {
-//                    String uid = decodedToken.getUid();
-//                    System.out.println(uid);
-//                })
-//        .addOnFailureListener(e -> System.out.println("Fail FAIL"));
-    }
 
     @GetMapping("/api/msg")
     public String getProtectedMsg() {

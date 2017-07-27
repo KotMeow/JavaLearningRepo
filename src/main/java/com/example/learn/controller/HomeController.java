@@ -3,6 +3,7 @@ package com.example.learn.controller;
 
 import com.example.learn.model.Food;
 import com.example.learn.model.Person;
+import com.example.learn.requests.RatingBody;
 import com.example.learn.service.FoodRepository;
 import com.example.learn.service.PersonRepository;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,7 +18,6 @@ import java.security.Principal;
 
 @Controller
 @RestController
-@CrossOrigin
 public class HomeController {
 
 
@@ -50,12 +50,14 @@ public class HomeController {
 
     @GetMapping("/api/msg")
     public String getProtectedMsg(Principal principal) {
-        log.info(String.valueOf(principal));
         return "Protected";
     }
     @GetMapping("/public/msg")
     public String getMsg(Principal principal) {
-        log.info(String.valueOf(principal));
         return "Unprotected";
+    }
+    @RequestMapping(value = "/api/send", method = RequestMethod.POST)
+    public String send(@RequestBody RatingBody ratingBody, Principal principal) {
+        return String.format("%s from %s!", ratingBody.getRating(),principal.getName());
     }
 }

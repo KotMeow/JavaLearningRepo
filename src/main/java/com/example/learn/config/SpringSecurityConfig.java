@@ -40,30 +40,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
 
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-                .antMatchers(HttpMethod.OPTIONS);
-    }
-
-
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors()
-                .and()
-                // we don't need CSRF because our token is invulnerable
-                .csrf().disable()
-                // All urls must be authenticated (filter for token always fires (/**)
-                // don't create session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //.and()
-        // Custom JWT based security filter
+                .csrf().disable();
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-
-
-        // disable page caching
-        // httpSecurity.headers().cacheControl();
     }
 }

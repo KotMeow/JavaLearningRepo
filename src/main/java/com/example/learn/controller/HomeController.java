@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Controller
 @RestController
@@ -48,13 +49,13 @@ public class HomeController {
 
 
     @GetMapping("/api/msg")
-    public String getProtectedMsg() {
-        log.info("protected");
+    public String getProtectedMsg(Principal principal) {
+        log.info(String.valueOf(principal));
         return "Protected";
     }
     @GetMapping("/public/msg")
-    public String getMsg() {
-        log.info("public");
+    public String getMsg(Principal principal) {
+        log.info(String.valueOf(principal));
         return "Unprotected";
     }
 }

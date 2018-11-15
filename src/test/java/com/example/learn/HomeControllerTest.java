@@ -2,6 +2,7 @@ package com.example.learn;
 
 import com.example.learn.model.Greeting;
 import com.example.learn.model.Person;
+import com.example.learn.service.GreetingsService;
 import com.example.learn.service.PersonRepository;
 import com.google.gson.Gson;
 import org.junit.Before;
@@ -22,7 +23,6 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -34,6 +34,9 @@ public class HomeControllerTest {
 
     @MockBean
     private PersonRepository repository;
+
+    @MockBean
+    private GreetingsService greetingsService;
 
     private Person person1;
     private Person person2;

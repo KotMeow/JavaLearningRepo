@@ -2,7 +2,6 @@ package com.example.learn.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 
@@ -31,5 +30,4 @@ public class Person {
     public String toString() {
         return String.format("Person: %s, power: %.2f.", name, power);
     }
-
 }

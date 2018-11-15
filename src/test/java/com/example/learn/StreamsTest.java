@@ -1,23 +1,18 @@
 package com.example.learn;
 
 import com.example.learn.model.Person;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@Slf4j
 public class StreamsTest {
-
-
     private List<Person> persons = Arrays.asList(
             new Person("Yoda", 24, 4.44),
             new Person("R2D2", 74, 8.0),
@@ -28,6 +23,7 @@ public class StreamsTest {
     private Person vader;
     private Person luke;
 
+//    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     //@Before - before each test, @BeforeClass - once before all
     @Before
@@ -38,7 +34,8 @@ public class StreamsTest {
 
     @Test
     public void collectJoiningTest() {
-
+        log.info("start");
+        persons.sort(Comparator.comparing(Person::getAge));
         String namesString = Stream.of(vader, luke)
                 .map(p -> p.getName().toUpperCase())
                 .collect(Collectors.joining(", "));
@@ -50,7 +47,7 @@ public class StreamsTest {
     public void filterSortToList() {
         List<Person> strongest = persons.stream()
                 .filter(p -> p.getPower() >= 5)
-                .sorted(Comparator.comparing(Person::getPower).reversed())
+                .sorted(Comparator.comparingDouble(Person::getPower).reversed())
                 .collect(Collectors.toList());
         assertThat(strongest.get(0).getName()).isEqualToIgnoringCase(vader.getName());
     }
@@ -69,5 +66,13 @@ public class StreamsTest {
         IntSummaryStatistics statistics = persons.stream().collect(Collectors.summarizingInt(Person::getAge));
         assertThat(statistics.getMax()).isEqualTo(88);
         assertThat(statistics.getMin()).isEqualTo(24);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldValidateNull() {
+        Integer val = null;
+        assertThat(val).isNull();
+        assertThat(Objects.isNull(val)).isTrue();
+        Objects.requireNonNull(val);
     }
 }

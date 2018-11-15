@@ -3,14 +3,13 @@ package com.example.learn;
 import com.example.learn.model.Person;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -45,6 +44,14 @@ public class FunctionalInterfacesTest {
     }
 
     @Test
+    public void functionTest() {
+        Function<Person, Integer> getBirthday = p -> LocalDate.now().getYear() - p.getAge();
+
+        List<Integer> birthdays = persons.stream().map(getBirthday).collect(Collectors.toList());
+        System.out.print(birthdays);
+    }
+
+    @Test
     public void consumerTest() {
         Consumer<Person> greeter = (p) -> System.out.printf("Hello, %s%n", p.getName());
         greeter.accept(vader);
@@ -55,7 +62,5 @@ public class FunctionalInterfacesTest {
         Comparator<Person> compByName = Comparator.comparing(Person::getName);
         String names = persons.stream().sorted(compByName).map(Person::getName).collect(Collectors.joining(", "));
         assertThat(names).containsSequence("Leia", "R2D2" ,"Yoda");
-
-
     }
 }

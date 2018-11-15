@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class HomeController {
@@ -23,14 +24,14 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("tekst", "test test nowy tekst");
+        model.addAttribute("tekst", "kot");
         return "index";
     }
 
     @GetMapping("/data")
     @CrossOrigin
     @ResponseBody
-    public List<Person> getPersonList() throws InterruptedException {
+    public List<Person> getPersonList() {
         log.info("Request for PersonService data");
         // Thread.sleep(2000);
         return personRepository.findAll();
@@ -46,12 +47,10 @@ public class HomeController {
     @PostMapping("/send")
     @ResponseBody
     public Greeting postData(@RequestBody(required = false) Greeting greeting) {
-        if (greeting != null) {
+        if (Objects.nonNull(greeting)) {
             greeting.setAge(greeting.getAge() + 10);
             return greeting;
-        }
-        else
-            return new Greeting();
+        } else return new Greeting();
     }
 
     @GetMapping("/hello")

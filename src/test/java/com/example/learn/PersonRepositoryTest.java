@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Repeat;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
@@ -18,13 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+@ActiveProfiles("test")
 public class PersonRepositoryTest {
 
     @Autowired
     private PersonRepository personRepository;
-
-//    @MockBean
-//    private PersonRepository personRepositoryMock;
 
     private Person person;
     private Person person2;
@@ -41,7 +39,7 @@ public class PersonRepositoryTest {
     public void savePerson() {
         personRepository.save(person);
         assertThat(personRepository.findOne(person.getId())).isEqualTo(person);
-        assertThat(personRepository.findOne(person.getId())).isEqualToIgnoringGivenFields(personSameButDifferent, "id");
+        assertThat(personRepository.findOne(person.getId())).isEqualToIgnoringGivenFields(personSameButDifferent, "id", "age");
     }
 
     @Test
